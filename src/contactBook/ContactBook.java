@@ -40,7 +40,10 @@ public class ContactBook {
         counter--;
     }
 
-    public String getName(int phone){return  contacts[searchIndexPhone(phone)].getName();}
+    public String getName(int phone){
+        int index = searchIndexPhone(phone);
+        if(index != -1) return  contacts[index].getName();
+        return null;}
 
     //Pre: name != null && hasContact(name)
     public int getPhone(String name) {
