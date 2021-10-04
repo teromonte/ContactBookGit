@@ -13,6 +13,8 @@ public class Main {
     public static final String SET_PHONE      = "SP";
     public static final String SET_EMAIL      = "SE";
     public static final String LIST_CONTACTS  = "LC";
+    public static final String LOOKUP_CONTACT = "GN";
+    public static final String CHECK_SAME_NUMBER = "EP";
     public static final String QUIT           = "Q";
     //NEW OLD
     //Constantes que definem as mensagens para o utilizador
@@ -24,6 +26,9 @@ public class Main {
     public static final String BOOK_EMPTY = "contactBook.Contact book empty.";
     public static final String QUIT_MSG = "Goodbye!";
     public static final String COMMAND_ERROR = "Unknown command.";
+    public static final String PHONE_NOT_EXIST = "Phone number does not exist.";
+    public static final String SAME_PHONE_NUMBERS = "There are contacts that share phone numbers.";
+    public static final String DIFFERENT_PHONE_NUMBERS = "All contacts have different phone numbers";
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -32,14 +37,35 @@ public class Main {
 
         while (!comm.equals(QUIT)){
             switch (comm) {
-                case ADD_CONTACT -> addContact(in, cBook);
-                case REMOVE_CONTACT -> deleteContact(in, cBook);
-                case GET_PHONE -> getPhone(in, cBook);
-                case GET_EMAIL -> getEmail(in, cBook);
-                case SET_PHONE -> setPhone(in, cBook);
-                case SET_EMAIL -> setEmail(in, cBook);
-                case LIST_CONTACTS -> listAllContacts(cBook);
-                default -> System.out.println(COMMAND_ERROR);
+                case ADD_CONTACT:
+                    addContact(in,cBook);
+                    break;
+                case REMOVE_CONTACT:
+                    deleteContact(in,cBook);
+                    break;
+                case GET_PHONE:
+                    getPhone(in,cBook);
+                    break;
+                case GET_EMAIL:
+                    getEmail(in,cBook);
+                    break;
+                case SET_PHONE:
+                    setPhone(in,cBook);
+                    break;
+                case SET_EMAIL:
+                    setEmail(in,cBook);
+                    break;
+                case LIST_CONTACTS:
+                    listAllContacts(cBook);
+                    break;
+                case LOOKUP_CONTACT:
+                    lookupContact(in,cBook);
+                    break;
+                case CHECK_SAME_NUMBER:
+                    checkSameNumber(cBook);
+                    break;
+                default:
+                    System.out.println(COMMAND_ERROR);
             }
             System.out.println();
             comm = getCommand(in);
@@ -131,5 +157,20 @@ public class Main {
             }
         }
         else System.out.println(BOOK_EMPTY);
+    }
+
+    private static void checkSameNumber(ContactBook cBook){
+        if(cBook.hasSameNumber())
+            System.out.println(SAME_PHONE_NUMBERS);
+        else
+            System.out.println(DIFFERENT_PHONE_NUMBERS);
+    }
+    private static void lookupContact(Scanner in, ContactBook cBook){
+        int phone;
+        phone = in.nextInt(); in.nextLine();
+        if(cBook.getName(phone) == null)
+            System.out.println(PHONE_NOT_EXIST);
+        else
+            System.out.println(cBook.getName(phone));
     }
 }
