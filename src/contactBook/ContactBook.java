@@ -22,8 +22,8 @@ public class ContactBook {
 
     public boolean hasSameNumber() {
         boolean found = false;
-        for (int i = 0; i < contacts.length && !found; i++) {
-            for (int j = i+1; j < contacts.length && !found; j++) {
+        for (int i = 0; i < counter; i++) {
+            for (int j = i+1; j < counter; j++) {
                 if(contacts[i].getPhone() == contacts[j].getPhone()) {
                     found = true;
                     return true;
